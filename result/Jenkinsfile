@@ -7,7 +7,7 @@ pipeline {
                 changeset "**/result/**"
             }
             steps {
-                echo 'Compiling worker app'
+                echo 'Build result app'
                 dir('result'){
                     nodejs(nodeJSInstallationName: 'Node 15.14.0', configId: 'NodeJS-15.14.0') {
                         sh 'npm config ls'
@@ -20,7 +20,7 @@ pipeline {
                 changeset "**/result/**"
             }
             steps {
-                echo 'Running Unit Tests on worker app'
+                echo 'Running Unit Tests on result app'
                 dir('result'){
                     sh 'ls'
                 }
@@ -32,7 +32,7 @@ pipeline {
                 changeset "**/result/**"
             }
             steps {
-                echo 'Packaging worker app'
+                echo 'Packaging result app'
                 dir('result'){
                     sh 'ls'
                     // sh 'mvn package -DskipTests'
