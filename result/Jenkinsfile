@@ -25,21 +25,8 @@ pipeline {
             steps {
                 echo 'Running Unit Tests on result app'
                 dir('result'){
-                    sh 'ls'
-                }
-            }
-        }
-        stage('Package') {
-            when {
-                branch 'master'
-                changeset "**/result/**"
-            }
-            steps {
-                echo 'Packaging result app'
-                dir('result'){
-                    sh 'ls'
-                    // sh 'mvn package -DskipTests'
-                    // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                    sh 'npm install'
+                    sh 'npm test'
                 }
             }
         }
