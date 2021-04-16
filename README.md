@@ -1,7 +1,7 @@
 Example Voting App
 =========
 
-This is a sample instavote application.
+This is a test edit for changeset
 
 Getting started
 ---------------
