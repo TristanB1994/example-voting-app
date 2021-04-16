@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
 
     stages {
         stage('Build') {
@@ -9,9 +14,7 @@ pipeline {
             steps {
                 echo 'Build result app'
                 dir('result'){
-                    nodejs(nodeJSInstallationName: 'Node 15.14.0', configId: 'NodeJS-15.14.0') {
-                        sh 'npm config ls'
-                    }
+                    sh 'npm install'
                 }
             }
         }
