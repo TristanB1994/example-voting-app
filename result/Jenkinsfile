@@ -1,0 +1,45 @@
+pipeline {
+    agent {
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
+
+    stages {
+        stage('Build') {
+            when {
+                changeset "**/result/**"
+            }
+            steps {
+                echo 'Build result app'
+                dir('result'){
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            when {
+                changeset "**/result/**"
+            }
+            steps {
+                echo 'Running Unit Tests on result app'
+                dir('result'){
+                    sh 'npm install'
+                    sh 'npm test'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Build pipeline for result is complete'
+        }
+        success {
+            slackSend (channel: "instavote-cd", message: "Build success - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|open>)")
+        }
+        failure {
+            slackSend (channel: "instavote-cd", message: "Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|open>)")
+        }
+    }
+}
