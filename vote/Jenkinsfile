@@ -6,7 +6,8 @@ pipeline {
             agent {
                 docker {
                     image 'python:2.7.16-slim'
-                    args '-u root --privileged'
+                    args '-u root --privileged \
+                          -v ${HOME}/app_build:/app'
                 }
             }
             when {
@@ -23,7 +24,8 @@ pipeline {
             agent {
                 docker {
                     image 'python:2.7.16-slim'
-                    args '-u root --privileged'
+                    args '-u root --privileged \
+                          -v ${HOME}/app_build:/app'
                 }
             }
             when {
