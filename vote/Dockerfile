@@ -1,5 +1,7 @@
 # Using official python runtime base image
-FROM schoolofdevops/voteapp-python:v0.1.0
+# Modified from schoolofdevops/voteapp-python:v0.1.0
+FROM tblandford/lfd261-vote:v1
+
 
 # Set the application directory
 WORKDIR /app
