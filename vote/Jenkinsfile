@@ -8,6 +8,7 @@ pipeline {
                     image 'python:2.7.16-slim'
                     args '-u root --privileged \
                           -w /app \
+                          -e VIRTUAL_ENV=/opt/venv \
                           -v $HOME:/app'
                 }
             }
@@ -17,7 +18,6 @@ pipeline {
             steps {
                 echo 'Build vote app'
                 dir('vote'){
-                    sh '$VIRTUAL_ENV=/opt/venv'
                     sh 'pip install -r requirements.txt'
                     sh 'PATH=$VIRTUAL_ENV/bin:$PATH'
                 }
