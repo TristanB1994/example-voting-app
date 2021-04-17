@@ -17,7 +17,7 @@ pipeline {
                 echo 'Build vote app'
                 dir('vote'){
                     // sh 'pip install -r requirements.txt'
-                    sh 'pip freeze'
+                    sh 'pip list'
                     sh 'PATH=$VIRTUAL_ENV/bin:$PATH'
                 }
             }
