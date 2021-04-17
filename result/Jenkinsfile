@@ -1,13 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
-    }
+    agent any
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'tblandford/lfd261-result:v1'
+                    args '-p 3000:3000'
+                }
+            }
             when {
                 changeset "**/result/**"
             }
@@ -19,6 +20,12 @@ pipeline {
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'tblandford/lfd261-result:v1'
+                    args '-p 3000:3000'
+                }
+            }
             when {
                 changeset "**/result/**"
             }
@@ -27,6 +34,22 @@ pipeline {
                 dir('result'){
                     sh 'npm install'
                     sh 'npm test'
+                }
+            }
+        }
+        stage('Docker-Package') {
+            agent any
+            // when {
+            //     branch 'master'
+            //     changeset "**/worker/**"
+            // }
+            steps {
+                echo 'Packaging worker app with docker'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com',, 'dockerlogin') {
+                        def workerImage = docker.build("tblandford/lfd261-result:v${env.BUILD_ID}", './result')
+                        workerImage.push()
+                    }
                 }
             }
         }
