@@ -54,7 +54,7 @@ pipeline {
             steps {
                 echo 'Packaging worker app with docker'
                 script {
-                    docker.withRegistry('https://index.docker.io/v1', 'dockerlogin') {
+                    docker.withRegistry('https://registry.hub.docker.com',, 'dockerlogin') {
                         def workerImage = docker.build("tblandford/lfd261-worker:v${env.BUILD_ID}", './worker')
                         workerImage.push()
                     }
