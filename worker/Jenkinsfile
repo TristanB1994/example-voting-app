@@ -2,8 +2,8 @@ pipeline {
     agent {
         docker {
             image 'maven:3.6.1-jdk-8-alpine'
-            args '-v $HOME/.m2:/root/.m2'
-        }
+            args '-v $HOME/.m2:/root/.m2 -v /usr/local/bin/docker:/usr/local/bin/docker'
+	}
     }
 
 
@@ -70,4 +70,4 @@ pipeline {
             slackSend (channel: "instavote-cd", message: "Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|open>)")
         }
     }
-}
+
