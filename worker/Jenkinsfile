@@ -28,7 +28,7 @@ pipeline {
                 docker {
                     image 'maven:3.6.1-jdk-8-alpine'
                     args '-v $HOME/.m2:/root/.m2 \
-			  --user root \
+			              --user root \
                           -v $HOME/worker.jar:/run/worker.jar'
                     
                     // -v /usr/local/bin/docker:/usr/local/bin/docker \
@@ -51,7 +51,9 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.6.1-jdk-8-alpine'
-                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v $HOME/.m2:/root/.m2 \
+			              --user root \
+                          -v $HOME/worker.jar:/run/worker.jar'
 
                     // -v /usr/local/bin/docker:/usr/local/bin/docker \
                     // -v /var/run/docker.sock:/var/run/docker.sock \
