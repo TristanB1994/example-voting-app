@@ -2,8 +2,10 @@ pipeline {
     agent {
         docker {
             image 'maven:3.6.1-jdk-8-alpine'
-            args '-v $HOME/.m2:/root/.m2 -v /usr/local/bin/docker:/usr/local/bin/docker'
-	}
+            args '-v $HOME/.m2:/root/.m2 \
+            -v /usr/local/bin/docker:/usr/local/bin/docker \
+            -v /var/run/docker.sock:/var/run/docker.sock'
+	    }
     }
 
 
