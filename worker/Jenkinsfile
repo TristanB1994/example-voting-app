@@ -1,17 +1,19 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.6.1-jdk-8-alpine'
-            args '-v $HOME/.m2:/root/.m2 \
-            -v /usr/local/bin/docker:/usr/local/bin/docker \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            --user root '
-	    }
-    }
+    
+    agent none
 
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.6.1-jdk-8-alpine'
+                    args '-v $HOME/.m2:/root/.m2 \
+                    -v /usr/local/bin/docker:/usr/local/bin/docker \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    --user root '
+                }
+            }
             when {
                 changeset "**/worker/**"
             }
@@ -23,6 +25,17 @@ pipeline {
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'maven:3.6.1-jdk-8-alpine'
+                    args '-v $HOME/.m2:/root/.m2'
+                    
+                    // -v /usr/local/bin/docker:/usr/local/bin/docker \
+                    // -v /var/run/docker.sock:/var/run/docker.sock \
+                    // --user root 
+
+                }
+            }
             when {
                 changeset "**/worker/**"
             }
@@ -34,6 +47,17 @@ pipeline {
             }
         }
         stage('Package') {
+            agent {
+                docker {
+                    image 'maven:3.6.1-jdk-8-alpine'
+                    args '-v $HOME/.m2:/root/.m2'
+
+                    // -v /usr/local/bin/docker:/usr/local/bin/docker \
+                    // -v /var/run/docker.sock:/var/run/docker.sock \
+                    // --user root 
+
+                }
+            }
             when {
                 branch 'master'
                 changeset "**/worker/**"
@@ -47,6 +71,7 @@ pipeline {
             }
         }
         stage('Docker-Package') {
+            agent any
             // when {
             //     branch 'master'
             //     changeset "**/worker/**"
