@@ -9,6 +9,7 @@ pipeline {
                     args '-u root --privileged \
                           -w /app \
                           -e VIRTUAL_ENV=/opt/venv \
+                          -v $HOME/venv:/opt/venv
                           -v $HOME:/app'
                 }
             }
