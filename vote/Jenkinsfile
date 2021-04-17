@@ -7,10 +7,13 @@ pipeline {
                 docker {
                     image 'python:2.7.16-slim'
                     args '-u root --privileged \
-                          -w /app \
-                          -e VIRTUAL_ENV=/opt/venv \
-                          -v $HOME/venv:/opt/venv \
-                          -v $HOME:/app'
+                          -v ${HOME}/app_build:/app \
+                          -w /app'
+
+                        //   -w /app \
+                        //   -e VIRTUAL_ENV=/opt/venv \
+                        //   -v $HOME/venv:/opt/venv \
+                        //   -v $HOME:/app'
                 }
             }
             when {
@@ -20,7 +23,6 @@ pipeline {
                 echo 'Build vote app'
                 dir('vote'){
                     sh 'pip install -r requirements.txt'
-                    sh 'PATH=$VIRTUAL_ENV/bin:$PATH'
                 }
             }
         }
@@ -29,7 +31,8 @@ pipeline {
                 docker {
                     image 'python:2.7.16-slim'
                     args '-u root --privileged \
-                          -v ${HOME}/app_build:/app'
+                          -v ${HOME}/app_build:/app \
+                          -w /app'
                 }
             }
             when {
@@ -38,6 +41,7 @@ pipeline {
             steps {
                 echo 'Running Unit Tests on vote app'
                 dir('vote'){
+                    sh 'pip install -r requirements.txt'
                     sh 'nosetests -v'
                 }
             }
