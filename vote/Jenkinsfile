@@ -6,14 +6,7 @@ pipeline {
             agent {
                 docker {
                     image 'tblandford/lfd261-vote:v1'
-                    args '-u root --privileged \
-                          -v ${HOME}/app_build:/app \
-                          -w /app'
-
-                        //   -w /app \
-                        //   -e VIRTUAL_ENV=/opt/venv \
-                        //   -v $HOME/venv:/opt/venv \
-                        //   -v $HOME:/app'
+                    args '-u root --privileged'
                 }
             }
             when {
@@ -30,9 +23,7 @@ pipeline {
             agent {
                 docker {
                     image 'tblandford/lfd261-vote:v1'
-                    args '-u root --privileged \
-                          -v ${HOME}/app_build:/app \
-                          -w /app'
+                    args '-u root --privileged'
                 }
             }
             when {
