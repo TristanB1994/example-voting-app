@@ -7,7 +7,8 @@ pipeline {
                 docker {
                     image 'python:2.7.16-slim'
                     args '-u root --privileged \
-                          -v $HOME/venv:/opt/venv'
+                          -w /app \
+                          -v $HOME:/app'
                 }
             }
             when {
@@ -16,8 +17,8 @@ pipeline {
             steps {
                 echo 'Build vote app'
                 dir('vote'){
-                    // sh 'pip install -r requirements.txt'
-                    sh 'pip list'
+                    sh '$VIRTUAL_ENV=/opt/venv'
+                    sh 'pip install -r requirements.txt'
                     sh 'PATH=$VIRTUAL_ENV/bin:$PATH'
                 }
             }
