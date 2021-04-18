@@ -16,9 +16,9 @@ pipeline {
 			  -v $HOME/worker.jar:/run/worker.jar'
                 }
             }
-            when {
-                changeset "**/worker/**"
-            }
+            // when {
+            //     changeset "**/worker/**"
+            // }
             steps {
                 echo 'Compiling worker app'
                 dir('worker'){
@@ -40,9 +40,9 @@ pipeline {
 
                 }
             }
-            when {
-                changeset "**/worker/**"
-            }
+            // when {
+            //     changeset "**/worker/**"
+            // }
             steps {
                 echo 'Running Unit Tests on worker app'
                 dir('worker'){
@@ -102,9 +102,9 @@ pipeline {
                     args '-u root --privileged'
                 }
             }
-            when {
-                changeset "**/vote/**"
-            }
+            // when {
+            //     changeset "**/vote/**"
+            // }
             steps {
                 echo 'Build vote app'
                 dir('vote'){
@@ -119,9 +119,9 @@ pipeline {
                     args '-u root --privileged'
                 }
             }
-            when {
-                changeset "**/vote/**"
-            }
+            // when {
+            //     changeset "**/vote/**"
+            // }
             steps {
                 echo 'Running Unit Tests on vote app'
                 dir('vote'){
@@ -156,9 +156,9 @@ pipeline {
                     args '-p 3000:3000'
                 }
             }
-            when {
-                changeset "**/result/**"
-            }
+            // when {
+            //     changeset "**/result/**"
+            // }
             steps {
                 echo 'Build result app'
                 dir('result'){
@@ -173,9 +173,9 @@ pipeline {
                     args '-p 3000:3000'
                 }
             }
-            when {
-                changeset "**/result/**"
-            }
+            // when {
+            //     changeset "**/result/**"
+            // }
             steps {
                 echo 'Running Unit Tests on result app'
                 dir('result'){
