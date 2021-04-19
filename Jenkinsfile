@@ -130,6 +130,19 @@ pipeline {
                 }
             }
         }
+        stage('Integration Test Vote') {
+            agent any
+            // when {
+            //     changeset "**/vote/**"
+            //     branch 'master'
+            // }
+            steps {
+                echo 'Running Integration Tests on vote app'
+                dir('vote'){
+                    sh './integration_test.sh'
+                }
+            }
+        }
         stage('Docker-Package Vote') {
             agent any
             when {
