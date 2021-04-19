@@ -51,6 +51,9 @@ services:
     image: postgres:9.4
     networks:
       - back-tier
+    environment:
+            #- POSTGRESQL_USERNAME=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
 
 volumes:
   db-data:
